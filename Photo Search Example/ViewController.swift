@@ -32,8 +32,8 @@ class ViewController: UIViewController {
                     for var i = 0; i < urlArray.count; i++ {
                         let imageData = NSData(contentsOfURL: NSURL(string: urlArray[i])!)
                         if let imageDataUnwrapped = imageData {
-                            let imageView = UIImageView(image: UIImage(data: imageDataUnwrapped))
-                            imageView.frame = CGRectMake(0, 320 * CGFloat(i), 320, 320)
+                            let imageView = UIImageView(frame: CGRectMake(0, 320*CGFloat(i), 320, 320))     //1
+                            imageView.setImageWithURL( NSURL(string: urlArray[i]))                          //2
                             self.scrollView.addSubview(imageView)
                     
                         }
