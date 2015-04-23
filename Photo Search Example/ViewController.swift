@@ -8,16 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
 
 
     @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchInstagramByHashtag("ocean")
+
+    }
+    
+    func searchInstagramByHashtag(searchString:String) {
         let manager = AFHTTPRequestOperationManager()
-        
-        manager.GET( "https://api.instagram.com/v1/tags/ocean/media/recent?client_id=5457d1cfece84945afd3c93a3aa48bf6",
+        manager.GET( "https://api.instagram.com/v1/tags/\(searchString)/media/recent?client_id=5457d1cfece84945afd3c93a3aa48bf6",
             parameters: nil,
             success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
                 println("JSON: " + responseObject.description)
@@ -47,6 +51,15 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        for subview in self.scrollView.subviews {
+            subview.removeFromSuperview()
+        }
+            searchBar.resignFirstResponder()
+            searchInstagramByHashtag(searchBar.text)
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
