@@ -32,16 +32,15 @@ class ViewController: UIViewController, UISearchBarDelegate {
                             urlArray.append(imageURLString)
                         }
                     }
-                    self.scrollView.contentSize = CGSizeMake(320, 320 * CGFloat(dataArray.count))
-                    for var i = 0; i < urlArray.count; i++ {
-                        let imageData = NSData(contentsOfURL: NSURL(string: urlArray[i])!)
-                        if let imageDataUnwrapped = imageData {
-                            let imageView = UIImageView(frame: CGRectMake(0, 320*CGFloat(i), 320, 320))     //1
-                            imageView.setImageWithURL( NSURL(string: urlArray[i]))                          //2
-                            self.scrollView.addSubview(imageView)
+                    let imageWidth = self.view.frame.width
+                    self.scrollView.contentSize = CGSizeMake(imageWidth, imageWidth * CGFloat(dataArray.count))
                     
-                        }
+                    for var i = 0; i < urlArray.count; i++ {
+                        let imageView = UIImageView(frame: CGRectMake(0, imageWidth*CGFloat(i), imageWidth, imageWidth))
+                        imageView.setImageWithURL( NSURL(string: urlArray[i]))
+                        self.scrollView.addSubview(imageView)
                     }
+                
                 }
             },
             failure: { (operation: AFHTTPRequestOperation!,error: NSError!) in
